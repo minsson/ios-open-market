@@ -17,7 +17,7 @@
                BlueprintIdentifier = "C70FB0F625BEF61C00C9924E"
                BuildableName = "OpenMarket.app"
                BlueprintName = "OpenMarket"
-               ReferencedContainer = "container:OpenMarket.xcodeproj">
+               ReferencedContainer = "container:OpenMarketnow.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "FDE9CB962881546300A78B24"
                BuildableName = "DataManagerTests.xctest"
                BlueprintName = "DataManagerTests"
-               ReferencedContainer = "container:OpenMarket.xcodeproj">
+               ReferencedContainer = "container:OpenMarketnow.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,7 +57,7 @@
             BlueprintIdentifier = "C70FB0F625BEF61C00C9924E"
             BuildableName = "OpenMarket.app"
             BlueprintName = "OpenMarket"
-            ReferencedContainer = "container:OpenMarket.xcodeproj">
+            ReferencedContainer = "container:OpenMarketnow.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -74,7 +74,7 @@
             BlueprintIdentifier = "C70FB0F625BEF61C00C9924E"
             BuildableName = "OpenMarket.app"
             BlueprintName = "OpenMarket"
-            ReferencedContainer = "container:OpenMarket.xcodeproj">
+            ReferencedContainer = "container:OpenMarketnow.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

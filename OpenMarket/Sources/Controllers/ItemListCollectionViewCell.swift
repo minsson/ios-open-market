@@ -1,24 +1,23 @@
 //
-//  ItemListCollectionViewCell.swift
+//  ItemCollectionViewCell.swift
 //  OpenMarket
 //
-//  Created by 이예은 on 2022/07/26.
+//  Created by 이예은 on 2022/07/23.
 //
 
 import UIKit
 
 class ItemListCollectionViewCell: UICollectionViewCell {
     private var item: ItemListPage.Item?
+
     
     let productImageView: UIImageView = {
         let imageView = UIImageView()
-        
         return imageView
     }()
     
     let accessaryImageView: UIImageView = {
         let imageView = UIImageView()
-        
         imageView.image = UIImage(systemName: "greaterthan")
         imageView.tintColor = .systemGray
         return imageView
@@ -26,21 +25,20 @@ class ItemListCollectionViewCell: UICollectionViewCell {
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        
         label.font = .boldSystemFont(ofSize: 18)
         return label
     }()
     
     let priceLabel: UILabel = {
         let label = UILabel()
-        
+        label.font = .preferredFont(forTextStyle: .body)
         label.textColor = .systemGray
         return label
     }()
     
    let stockLabel: UILabel = {
         let label = UILabel()
-       
+        label.font = .preferredFont(forTextStyle: .body)
         label.textAlignment = .right
         label.textColor = .systemGray
         return label
@@ -48,7 +46,6 @@ class ItemListCollectionViewCell: UICollectionViewCell {
     
     private let firstHorizontalStackView: UIStackView = {
         let stackView = UIStackView()
-        
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
         stackView.spacing = 8
@@ -58,7 +55,6 @@ class ItemListCollectionViewCell: UICollectionViewCell {
     
     private let secondHorizontalStackView: UIStackView = {
         let stackView = UIStackView()
-        
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
         stackView.spacing = 2
@@ -68,7 +64,6 @@ class ItemListCollectionViewCell: UICollectionViewCell {
     
     private let thirdVerticalStackView: UIStackView = {
         let stackView = UIStackView()
-        
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         stackView.spacing = 2
@@ -78,9 +73,18 @@ class ItemListCollectionViewCell: UICollectionViewCell {
     
     private let entireStackView: UIStackView = {
         let stackView = UIStackView()
-        
         stackView.alignment = .center
         stackView.axis = .horizontal
+        stackView.spacing = 2
+        stackView.distribution = .fill
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private let verticalStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.alignment = .center
+        stackView.axis = .vertical
         stackView.spacing = 2
         stackView.distribution = .fill
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -90,10 +94,13 @@ class ItemListCollectionViewCell: UICollectionViewCell {
     private func arrangeSubView() {
         firstHorizontalStackView.addArrangedSubview(stockLabel)
         firstHorizontalStackView.addArrangedSubview(accessaryImageView)
+        
         secondHorizontalStackView.addArrangedSubview(nameLabel)
         secondHorizontalStackView.addArrangedSubview(firstHorizontalStackView)
+        
         thirdVerticalStackView.addArrangedSubview(secondHorizontalStackView)
         thirdVerticalStackView.addArrangedSubview(priceLabel)
+        
         entireStackView.addArrangedSubview(productImageView)
         entireStackView.addArrangedSubview(thirdVerticalStackView)
         
@@ -103,7 +110,7 @@ class ItemListCollectionViewCell: UICollectionViewCell {
             entireStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             entireStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             entireStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            entireStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            entireStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
             
             productImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.8),
             productImageView.widthAnchor.constraint(equalTo: productImageView.heightAnchor, multiplier: 0.8),
@@ -112,37 +119,63 @@ class ItemListCollectionViewCell: UICollectionViewCell {
         ])
     }
     
+    private func arrangeSubView2() {
+        verticalStackView.addSubview(productImageView)
+        verticalStackView.addSubview(nameLabel)
+        verticalStackView.addSubview(priceLabel)
+        verticalStackView.addSubview(stockLabel)
+        
+        contentView.addSubview(verticalStackView)
+        
+        NSLayoutConstraint.activate([
+            verticalStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            verticalStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            verticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            verticalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
+            
+            productImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.9),
+            productImageView.widthAnchor.constraint(equalTo: productImageView.heightAnchor, multiplier: 0.9)
+        ])
+    }
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         arrangeSubView()
-        configureCell()
-        
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
-    func receiveData(_ data: ItemListPage.Item) {
-        self.item = data
-    }
-
-    func configureCell() {
-        guard let item = item else {
-            return
-        }
-        
-        let imageData = item.thumbnail
-        guard let url = URL(string: imageData) else { return }
-        guard let imageData = try? Data(contentsOf: url) else { return }
-        
-        let image = UIImage(data: imageData)
-        
-        self.productImageView.image = image
-        self.stockLabel.text = "잔여수량 : \(item.stock)"
-        self.priceLabel.text = "\(item.price)"
-        self.nameLabel.text = item.name
+//    func transferCell(flag: Int) {
+//        if flag == 0 {
+//            arrangeSubView()
+//        } else {
+//            arrangeSubView2()
+//        }
+//    }
+    
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//
+//        productImageView.image = nil
+//        stockLabel.text = nil
+//        priceLabel.text = nil
+//        nameLabel.text = nil
+//    }
+    
+    func receiveData(_ item: ItemListPage.Item) {
+        configureCell(with: item)
     }
     
+    func configureCell(with item: ItemListPage.Item) {
+        let imageURLString = item.thumbnail
+        self.productImageView.setImageURL(imageURLString)
+        
+        self.stockLabel.text = "잔여수량 : \(item.stock)"
+        self.priceLabel.text = "\(item.price)"
+        self.nameLabel.text = "\(item.name)"
+    }
 }
+
