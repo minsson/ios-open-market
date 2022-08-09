@@ -33,7 +33,7 @@ final class GridCollectionViewController: UIViewController, ItemDataHandling {
         setUpCollectionViewLayout()
         dataSource = configureGridDataSource()
         
-        getProductList(from: APIURLComponents.openMarketURLComponents?.url)
+        createNetworkRequest(using: HTTPMethod.get, on: APIURLComponents.openMarketURLComponents?.url)
     }
 }
 

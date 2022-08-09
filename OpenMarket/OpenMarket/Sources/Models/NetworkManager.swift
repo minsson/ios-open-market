@@ -11,22 +11,12 @@ struct NetworkManager {
     
     // MARK: - Static Actions
     
-    static func performRequestToAPI(
-        from url: URL?,
-        httpMethod: String,
-        body: Data?,
+    static func execute(
+        _ networkRequest: URLRequest,
         completion: @escaping (Result<Data, NetworkingError>) -> Void
     ) {
         
-        guard let url = url else {
-            return
-        }
-        
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpBody = body
-        urlRequest.httpMethod = httpMethod
-        
-        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+        let task = URLSession.shared.dataTask(with: networkRequest) { data, response, error in
             if error != nil {
                 return completion(.failure(.clientTransport))
             }

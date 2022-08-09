@@ -21,11 +21,16 @@ protocol ItemDataHandling: AnyObject {
 // MARK: - Actions
 
 extension ItemDataHandling {
-    func getProductList(from url: URL?) {
-        NetworkManager.performRequestToAPI(
-            from: url,
-            httpMethod: "GET",
+    func createNetworkRequest(using httpMethod: HTTPMethod, on url: URL?) {
+        
+        let urlRequest = APIRequest(
+            url: url!,
+            httpMethod: httpMethod,
             body: nil
+        ).createURLRequest()
+        
+        NetworkManager.execute(
+            urlRequest
         ) { (result: Result<Data, NetworkingError>) in
             switch result {
             case .success(let data):
