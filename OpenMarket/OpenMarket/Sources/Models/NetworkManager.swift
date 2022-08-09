@@ -13,6 +13,8 @@ struct NetworkManager {
     
     static func performRequestToAPI(
         from url: URL?,
+        httpMethod: String,
+        body: Data?,
         completion: @escaping (Result<Data, NetworkingError>) -> Void
     ) {
         
@@ -20,7 +22,11 @@ struct NetworkManager {
             return
         }
         
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpBody = body
+        urlRequest.httpMethod = httpMethod
+        
+        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             if error != nil {
                 return completion(.failure(.clientTransport))
             }
