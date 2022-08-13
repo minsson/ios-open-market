@@ -111,15 +111,15 @@ private extension ContainerViewController {
         NSLayoutConstraint.activate([
             segmentedControl.topAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.topAnchor,
-                constant: 30
+                constant: 8
             ),
             segmentedControl.leadingAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                constant: 30
+                constant: 120
             ),
             segmentedControl.trailingAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                constant: -30
+                constant: -120
             )
         ])
     }
@@ -128,7 +128,7 @@ private extension ContainerViewController {
         NSLayoutConstraint.activate([
             listCollectionViewController.view.topAnchor.constraint(
                 equalTo: segmentedControl.bottomAnchor,
-                constant: 5
+                constant: 24
             ),
             listCollectionViewController.view.bottomAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.bottomAnchor,
@@ -149,7 +149,7 @@ private extension ContainerViewController {
         NSLayoutConstraint.activate([
             gridCollectionViewController.view.topAnchor.constraint(
                 equalTo: segmentedControl.bottomAnchor,
-                constant: 5
+                constant: 24
             ),
             gridCollectionViewController.view.bottomAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.bottomAnchor,
