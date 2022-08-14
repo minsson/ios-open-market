@@ -46,6 +46,35 @@ final class ContainerViewController: UIViewController {
         return gridCollectionViewController
     }()
     
+    private lazy var itemRegistrationViewController: ItemRegistrationViewController = {
+        let itemRegistrationViewController = ItemRegistrationViewController()
+        itemRegistrationViewController.view.backgroundColor = .white
+        return itemRegistrationViewController
+    }()
+    
+    private let floatingButtonWithActionSheet: UIButton = {
+        let floatingButtonForActionSheet = UIButton()
+        
+        floatingButtonForActionSheet.layer.cornerRadius = 30
+        floatingButtonForActionSheet.layer.shadowOpacity = 0.1
+        
+        floatingButtonForActionSheet.backgroundColor = .systemPurple
+        floatingButtonForActionSheet.tintColor = .white
+        
+        floatingButtonForActionSheet.setImage(UIImage(systemName: "plus"), for: .normal)
+        
+        return floatingButtonForActionSheet
+    }()
+    
+    private lazy var actionSheetForFloatingButton: UIAlertController = {
+        let actionSheetForFloatingButton = UIAlertController(
+            title: nil,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        return actionSheetForFloatingButton
+    }()
+    
     // MARK: - Life Cycles
     
     override func viewDidLoad() {
@@ -58,29 +87,35 @@ final class ContainerViewController: UIViewController {
         
         addSubViewToViewController()
         setupUIComponentsLayout()
-        segmentedControlDidTap()
+        
+        setupActionSheetForFloatingButton()
+        setupTargetForSegmentedControl()
+        setupTargetForFloatingButtonWithActionSheet()
     }
 }
 
-// MARK: - Private Properties
+// MARK: - Private Actions
 
 private extension ContainerViewController {
+    
+    // MARK: Actions for Adding UIComponents
+    
     func addSubViewToViewController() {
         view.addSubview(listCollectionViewController.view)
         view.addSubview(gridCollectionViewController.view)
         view.addSubview(segmentedControl)
+        view.addSubview(floatingButtonWithActionSheet)
         
         addChild(listCollectionViewController)
         addChild(gridCollectionViewController)
         
         listCollectionViewController.didMove(toParent: self)
         gridCollectionViewController.didMove(toParent: self)
-        
-        gridCollectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        listCollectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    func segmentedControlDidTap() {
+    // MARK: Actions for Segmented Control
+    
+    func setupTargetForSegmentedControl() {
         segmentedControl.addTarget(
             self,
             action: #selector(switchLayout),
@@ -101,10 +136,13 @@ private extension ContainerViewController {
         }
     }
     
+    // MARK: Actions for Autolayout
+    
     func setupUIComponentsLayout() {
         setupSegmentedControlLayout()
         setupListCollectionViewLayout()
         setupGridCollectionViewLayout()
+        setupFloatingButtonLayout()
     }
     
     func setupSegmentedControlLayout() {
@@ -123,8 +161,9 @@ private extension ContainerViewController {
             )
         ])
     }
-
+    
     func setupListCollectionViewLayout() {
+        listCollectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             listCollectionViewController.view.topAnchor.constraint(
                 equalTo: segmentedControl.bottomAnchor,
@@ -146,6 +185,7 @@ private extension ContainerViewController {
     }
     
     func setupGridCollectionViewLayout() {
+        gridCollectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             gridCollectionViewController.view.topAnchor.constraint(
                 equalTo: segmentedControl.bottomAnchor,
@@ -164,5 +204,59 @@ private extension ContainerViewController {
                 constant: -5
             )
         ])
+    }
+    
+    func setupFloatingButtonLayout() {
+        floatingButtonWithActionSheet.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            floatingButtonWithActionSheet.widthAnchor.constraint(equalToConstant: 60),
+            floatingButtonWithActionSheet.heightAnchor.constraint(equalToConstant: 60),
+            
+            floatingButtonWithActionSheet.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            floatingButtonWithActionSheet.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24)
+        ])
+    }
+    
+    // MARK: - Actions for Floating Button with Action Sheet
+    
+    func setupTargetForFloatingButtonWithActionSheet() {
+        floatingButtonWithActionSheet.addTarget(
+            self,
+            action: #selector(showActionSheet),
+            for: .touchUpInside
+        )
+    }
+    
+    @objc func showActionSheet() {
+        self.present(actionSheetForFloatingButton, animated: true)
+    }
+    
+    // MARK: - Actions for ActionSheet
+    
+    func setupActionSheetForFloatingButton() {
+        let itemRegistrationAction = UIAlertAction(
+            title: "상품 등록",
+            style: .default,
+            handler: { _ in
+                // TODO: 등록페이지로 이동하는 코드 구현
+            }
+        )
+        
+        let itemEditingAction = UIAlertAction(
+            title: "상품 수정",
+            style: .default,
+            handler: { _ in
+                // TODO: 수정페이지로 이동하는 코드 구현
+            }
+        )
+        
+        let cancelAction = UIAlertAction(
+            title: "취소",
+            style: .cancel
+        )
+        
+        [itemRegistrationAction, itemEditingAction, cancelAction].forEach {
+            actionSheetForFloatingButton.addAction($0)
+        }
     }
 }
