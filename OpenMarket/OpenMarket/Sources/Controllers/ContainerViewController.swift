@@ -49,6 +49,12 @@ final class ContainerViewController: UIViewController {
     private lazy var itemRegistrationViewController: ItemRegistrationViewController = {
         let itemRegistrationViewController = ItemRegistrationViewController()
         itemRegistrationViewController.view.backgroundColor = .white
+        itemRegistrationViewController.title = "상품 등록"
+        itemRegistrationViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: nil
+        )
         return itemRegistrationViewController
     }()
     
@@ -91,6 +97,18 @@ final class ContainerViewController: UIViewController {
         setupActionSheetForFloatingButton()
         setupTargetForSegmentedControl()
         setupTargetForFloatingButtonWithActionSheet()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 }
 
@@ -136,7 +154,7 @@ private extension ContainerViewController {
         }
     }
     
-    // MARK: Actions for Autolayout
+    // MARK: Actions for Auto Layout
     
     func setupUIComponentsLayout() {
         setupSegmentedControlLayout()
@@ -238,7 +256,7 @@ private extension ContainerViewController {
             title: "상품 등록",
             style: .default,
             handler: { _ in
-                // TODO: 등록페이지로 이동하는 코드 구현
+                self.navigationController?.pushViewController(self.itemRegistrationViewController, animated: true)
             }
         )
         
