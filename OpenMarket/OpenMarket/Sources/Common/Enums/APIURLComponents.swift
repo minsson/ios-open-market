@@ -11,7 +11,7 @@ enum APIURLComponents {
     
     // MARK: - Static Properties
     
-    static var openMarketURLComponents = URLComponents(string: "https://market-training.yagom-academy.kr/api/products")
+    static var openMarketURLComponents = URLComponents(string: "https://openmarket.yagom-academy.kr/api/products")
     
     // MARK: - Static Actions
     
