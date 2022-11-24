@@ -94,10 +94,8 @@
 		4252740A287D6FFF00A63D7F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FD0A105528A2D189003C8CBC /* APIRequest.swift */,
 				4252740B287D700C00A63D7F /* ItemListPage.swift */,
 				42DEC53C289A9C3A0090D35F /* ImageCacheManager.swift */,
-				FDE9CB682880024800A78B24 /* NetworkManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -110,21 +108,13 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		4252743328810FFF00A63D7F /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				42DEC532289A6AB80090D35F /* Cells */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		425274342881101B00A63D7F /* Controllers */ = {
+		4252743328810FFF00A63D7F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				FDB99C27289A8DC5001B10BE /* ContainerViewController.swift */,
 				C70FB0FE25BEF61C00C9924E /* ListCollectionViewController.swift */,
 				42DEC52E289A6A4F0090D35F /* GridCollectionViewController.swift */,
-				FD8ED59C28A8532B00F631F2 /* ItemRegistrationViewController.swift */,
+				42DEC532289A6AB80090D35F /* Views */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -132,34 +122,20 @@
 		425274352881103B00A63D7F /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				C70FB0FA25BEF61C00C9924E /* AppDelegate.swift */,
-				C70FB0FC25BEF61C00C9924E /* SceneDelegate.swift */,
 				FD72EEAA289D87590051522E /* Common */,
-				4252740A287D6FFF00A63D7F /* Models */,
-				4252743328810FFF00A63D7F /* Views */,
-				425274342881101B00A63D7F /* Controllers */,
-				FDE9CBA4288158D100A78B24 /* Errors */,
+				FDCBB299292F342900A16BD6 /* Networking */,
+				FDCBB296292F333300A16BD6 /* Features */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		42DEC532289A6AB80090D35F /* Cells */ = {
+		42DEC532289A6AB80090D35F /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				428A986428900DD80066F73E /* ItemListCollectionViewCell.swift */,
 				42DEC530289A6AB30090D35F /* ItemGridCollectionViewCell.swift */,
 			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
-		42DEC535289A92760090D35F /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				42DEC536289A928E0090D35F /* UILabel+Extensions.swift */,
-				42DEC538289A92A50090D35F /* Double+Extensions.swift */,
-				42DEC53A289A9BE00090D35F /* UIImageView+Extensions.swift */,
-			);
-			path = Extensions;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		C70FB0EE25BEF61C00C9924E = {
@@ -184,6 +160,8 @@
 			isa = PBXGroup;
 			children = (
 				C70FB10825BEF61D00C9924E /* Info.plist */,
+				C70FB0FA25BEF61C00C9924E /* AppDelegate.swift */,
+				C70FB0FC25BEF61C00C9924E /* SceneDelegate.swift */,
 				4252743228810FC700A63D7F /* Resources */,
 				425274352881103B00A63D7F /* Sources */,
 			);
@@ -193,9 +171,9 @@
 		FD72EEAA289D87590051522E /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				FDB99C24289A5CB0001B10BE /* Protocols */,
-				42DEC535289A92760090D35F /* Extensions */,
-				FDB99C29289AAE91001B10BE /* Enums */,
+				42DEC53E289D427A0090D35F /* Color.swift */,
+				42DEC536289A928E0090D35F /* UILabel+Extensions.swift */,
+				42DEC538289A92A50090D35F /* Double+Extensions.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -209,13 +187,51 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		FDB99C29289AAE91001B10BE /* Enums */ = {
+		FDCBB296292F333300A16BD6 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				FDCBB297292F334600A16BD6 /* MainPage */,
+				FDCBB298292F33AF00A16BD6 /* ItemRegistration */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		FDCBB297292F334600A16BD6 /* MainPage */ = {
+			isa = PBXGroup;
+			children = (
+				FDB99C24289A5CB0001B10BE /* Protocols */,
+				FDCBB29A292F357B00A16BD6 /* Enums */,
+				4252740A287D6FFF00A63D7F /* Models */,
+				4252743328810FFF00A63D7F /* Controllers */,
+			);
+			path = MainPage;
+			sourceTree = "<group>";
+		};
+		FDCBB298292F33AF00A16BD6 /* ItemRegistration */ = {
+			isa = PBXGroup;
+			children = (
+				FD8ED59C28A8532B00F631F2 /* ItemRegistrationViewController.swift */,
+			);
+			path = ItemRegistration;
+			sourceTree = "<group>";
+		};
+		FDCBB299292F342900A16BD6 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				FDE9CB682880024800A78B24 /* NetworkManager.swift */,
+				FD0A105528A2D189003C8CBC /* APIRequest.swift */,
 				4259A5EB2886924A0059B0BA /* APIURLComponents.swift */,
 				FD0A105728A2E06C003C8CBC /* HTTPMethod.swift */,
+				FDE9CBA5288158F200A78B24 /* NetworkingError.swift */,
+				42DEC53A289A9BE00090D35F /* UIImageView+Extensions.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		FDCBB29A292F357B00A16BD6 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
 				FDB99C22289A5C36001B10BE /* Section.swift */,
-				42DEC53E289D427A0090D35F /* Color.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -226,14 +242,6 @@
 				FDE9CB992881546300A78B24 /* DataManagerTests.swift */,
 			);
 			path = DataManagerTests;
-			sourceTree = "<group>";
-		};
-		FDE9CBA4288158D100A78B24 /* Errors */ = {
-			isa = PBXGroup;
-			children = (
-				FDE9CBA5288158F200A78B24 /* NetworkingError.swift */,
-			);
-			path = Errors;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
