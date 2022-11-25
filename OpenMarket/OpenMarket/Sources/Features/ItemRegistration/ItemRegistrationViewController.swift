@@ -80,6 +80,7 @@ final class ItemRegistrationViewController: UIViewController {
         super.viewDidLoad()
         
         setupUIComponents()
+        configureComponents()
     }
 }
 
@@ -147,4 +148,86 @@ private extension ItemRegistrationViewController {
         entireVerticalStackView.addArrangedSubview(stockTextField)
         entireVerticalStackView.addArrangedSubview(textView)
     }
+}
+
+// MARK: - Actions for configuration of Components
+
+private extension ItemRegistrationViewController {
+
+    func configureComponents() {
+        configureDoneButton()
+        configureImagePicker()
+        configureTargetForSegmentedControl()
+        configureAddingPhotoButtonImageView()
+    }
+
+    // MARK: - Actions for Done Button
+
+    func configureDoneButton() {
+        let doneButton = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: #selector(pushDataToServer)
+        )
+
+        self.navigationItem.rightBarButtonItem = doneButton
+    }
+
+    @objc func pushDataToServer() {
+        // TODO: 데이터 취합
+        // TODO: NetworkManager를 통해 Post하는 메서드 사용
+    }
+
+    // MARK: - Actions for Image Picker
+
+    func configureImagePicker() {
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+    }
+
+    @objc func openImagePicker() {
+        present(imagePicker, animated: true)
+    }
+
+    // MARK: - Actions for Segmented Control
+
+    func configureTargetForSegmentedControl() {
+        currencySegmentedControl.addTarget(
+            self,
+            action: #selector(switchCurrency),
+            for: .valueChanged
+        )
+    }
+
+    @objc func switchCurrency(segmentedControl: UISegmentedControl) {
+        // TODO: 환율 고르는 게 POST 할 때 반영되도록 수정
+        print("TODO: 환율 고르는 게 POST 할 때 반영되도록 수정")
+    }
+
+    // MARK: - Actions for AddingPhotoButtonImageView
+
+    func configureAddingPhotoButtonImageView() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openImagePicker))
+        addingPhotoButtonImageView.addGestureRecognizer(tapGesture)
+        addingPhotoButtonImageView.isUserInteractionEnabled = true
+    }
+}
+
+// MARK: - UIImagePickerControllerDelegate
+
+extension ItemRegistrationViewController: UIImagePickerControllerDelegate {
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            self.addingPhotoButtonImageView.image = image
+        }
+
+        dismiss(animated: true)
+    }
+}
+
+// MARK: - UINavigationControllerDelegate
+
+extension ItemRegistrationViewController: UINavigationControllerDelegate {
+
 }
