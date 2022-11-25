@@ -11,7 +11,7 @@ extension Double {
     
     // MARK: - Actions
     
-    func applyFormat(currency: ItemListPage.Item.Currency) -> String? {
+    func applyFormat(currency: Currency) -> String? {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
         numberFormatter.maximumFractionDigits = 4

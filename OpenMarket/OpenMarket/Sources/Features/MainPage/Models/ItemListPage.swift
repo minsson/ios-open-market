@@ -44,13 +44,6 @@ struct ItemListPage: Decodable {
 
         // MARK: - Enums
         
-        enum Currency: String, Decodable {
-            case krw = "KRW"
-            case usd = "USD"
-            case hkd = "HKD"
-            case jpy = "JPY"
-        }
-
         private enum CodingKeys: String, CodingKey {
             case id
             case vendorID = "vendor_id"

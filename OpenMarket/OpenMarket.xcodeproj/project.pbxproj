@@ -31,6 +31,7 @@
 		FDE9CB692880024800A78B24 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE9CB682880024800A78B24 /* NetworkManager.swift */; };
 		FDE9CB9A2881546300A78B24 /* DataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE9CB992881546300A78B24 /* DataManagerTests.swift */; };
 		FDE9CBA6288158F200A78B24 /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE9CBA5288158F200A78B24 /* NetworkingError.swift */; };
+		FDECB7C02930F1D10085635C /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDECB7BF2930F1D10085635C /* Currency.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		FDE9CB972881546300A78B24 /* DataManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DataManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDE9CB992881546300A78B24 /* DataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerTests.swift; sourceTree = "<group>"; };
 		FDE9CBA5288158F200A78B24 /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
+		FDECB7BF2930F1D10085635C /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				FDB99C22289A5C36001B10BE /* Section.swift */,
+				FDECB7BF2930F1D10085635C /* Currency.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				4259A5EC2886924A0059B0BA /* APIURLComponents.swift in Sources */,
 				42DEC539289A92A50090D35F /* Double+Extensions.swift in Sources */,
 				42DEC53F289D427A0090D35F /* Color.swift in Sources */,
+				FDECB7C02930F1D10085635C /* Currency.swift in Sources */,
 				FDB99C26289A5CD7001B10BE /* ItemDataHandling.swift in Sources */,
 				FDE9CB692880024800A78B24 /* NetworkManager.swift in Sources */,
 				4252740C287D700C00A63D7F /* ItemListPage.swift in Sources */,

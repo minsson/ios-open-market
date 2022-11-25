@@ -50,11 +50,6 @@ final class ContainerViewController: UIViewController {
         let itemRegistrationViewController = ItemRegistrationViewController()
         itemRegistrationViewController.view.backgroundColor = .white
         itemRegistrationViewController.title = "상품 등록"
-        itemRegistrationViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .done,
-            target: self,
-            action: nil
-        )
         return itemRegistrationViewController
     }()
     
