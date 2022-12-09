@@ -12,11 +12,11 @@ struct NetworkManager {
     // MARK: - Static Actions
     
     static func execute(
-        _ networkRequest: URLRequest,
+        _ urlRequest: URLRequest,
         completion: @escaping (Result<Data, NetworkingError>) -> Void
     ) {
         
-        let task = URLSession.shared.dataTask(with: networkRequest) { data, response, error in
+        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             if error != nil {
                 return completion(.failure(.clientTransport))
             }
@@ -32,14 +32,6 @@ struct NetworkManager {
             completion(.success(data))
         }
         task.resume()
-    }
-    
-    static func makeDataFrom(fileName: String) -> Data? {
-        guard let dataAsset: NSDataAsset = NSDataAsset.init(name: fileName) else {
-            return nil
-        }
-        
-        return dataAsset.data
     }
     
     static func parse<T: Decodable>(_ data: Data,

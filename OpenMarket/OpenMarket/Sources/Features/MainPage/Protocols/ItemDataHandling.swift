@@ -21,13 +21,11 @@ protocol ItemDataHandling: AnyObject {
 // MARK: - Actions
 
 extension ItemDataHandling {
-    func createNetworkRequest(using httpMethod: HTTPMethod, on url: URL?) {
+    func createNetworkRequest(using httpMethod: HTTPMethod) {
         
-        let urlRequest = APIRequest(
-            url: url!,
-            httpMethod: httpMethod,
-            body: nil
-        ).createURLRequest()
+        guard let urlRequest = OpenMarketAPIRequestGet().urlRequest else {
+            return
+        }
         
         NetworkManager.execute(
             urlRequest

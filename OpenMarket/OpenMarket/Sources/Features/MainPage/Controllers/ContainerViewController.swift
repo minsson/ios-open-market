@@ -16,11 +16,6 @@ final class ContainerViewController: UIViewController {
         case grid = 1
     }
     
-    private enum QueryValues {
-        static let pageNumber = 1
-        static let itemsPerPage = 100
-    }
-    
     // MARK: - Properties
     
     private let segmentedControl: UISegmentedControl = {
@@ -80,11 +75,6 @@ final class ContainerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        APIURLComponents.configureQueryItem(
-            pageNumber: QueryValues.pageNumber,
-            itemsPerPage: QueryValues.itemsPerPage
-        )
         
         addSubViewToViewController()
         setupUIComponentsLayout()

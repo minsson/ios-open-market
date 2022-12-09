@@ -31,7 +31,8 @@ final class ListCollectionViewController: UIViewController, ItemDataHandling {
         
         setUpCollectionViewLayout()
         dataSource = configureListDataSource()
-        createNetworkRequest(using: HTTPMethod.get, on: APIURLComponents.openMarketURLComponents?.url)
+        
+        createNetworkRequest(using: HTTPMethod.get)
     }
 }
 
