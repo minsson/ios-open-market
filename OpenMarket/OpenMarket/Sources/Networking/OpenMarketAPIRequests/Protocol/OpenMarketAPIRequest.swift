@@ -21,11 +21,7 @@ protocol OpenMarketAPIRequestGettable: OpenMarketAPIRequest {
     
 }
 
-protocol OpenMarketAPIRequestSettable: OpenMarketAPIRequest {
-    
-    var image: UIImage { get }
-    
-}
+protocol OpenMarketAPIRequestSettable: OpenMarketAPIRequest, MultipartFormDataHandleable { }
 
 extension OpenMarketAPIRequest {
     
@@ -61,6 +57,8 @@ extension OpenMarketAPIRequestGettable {
     
 }
 
+
+
 extension OpenMarketAPIRequestSettable {
     
     var url: URL? {
@@ -69,23 +67,38 @@ extension OpenMarketAPIRequestSettable {
         return urlComponents?.url
     }
     
-    // TODO: urlRequest를 쪼갤 필요성이 있음
     var urlRequest: URLRequest? {
         guard let url = url else {
             return nil
         }
         
-        let boundary: String = UUID().uuidString
-        let lineBreak = "\r\n"
-        
         var request = URLRequest(url: url)
-        var body = Data()
         
         request.httpMethod = "POST"
         request.setValue("7184295e-4aa1-11ed-a200-354cb82ae52e", forHTTPHeaderField: "identifier")
         request.setValue("multipart/form-data; boundary=" + boundary, forHTTPHeaderField: "Content-type")
         
         // TODO: temporaryData를 실제 데이터로 교체하기
+        
+        request.httpBody = multipartFormBody
+        return request
+    }
+    
+}
+
+protocol MultipartFormDataHandleable {
+    
+    var boundary: String { get }
+    var image: UIImage { get }
+    
+}
+
+extension MultipartFormDataHandleable {
+    
+    var multipartFormBody: Data {
+        var body = Data()
+        let lineBreak = "\r\n"
+        
         body.append("--\(boundary + lineBreak)")
         body.append("Content-Disposition: form-data; name=\"params\"\(lineBreak + lineBreak)")
         let temporaryData = "{\"name\": \"민\", \"price\": 15000, \"stock\":1000, \"currency\": \"KRW\", \"secret\": \"ebs12345\", \"description\": \"화이팅\"}"
@@ -98,8 +111,7 @@ extension OpenMarketAPIRequestSettable {
         body.append(lineBreak)
         body.append("--\(boundary)--\(lineBreak)")
         
-        request.httpBody = body
-        return request
+        return body
     }
     
 }

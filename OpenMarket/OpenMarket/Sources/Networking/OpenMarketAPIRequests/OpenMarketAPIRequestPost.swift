@@ -11,6 +11,8 @@ struct OpenMarketAPIRequestPost: OpenMarketAPIRequest, OpenMarketAPIRequestSetta
     
     var image: UIImage
     
-    var httpMethod: String = HTTPMethod.post.rawValue
+    let httpMethod: String = HTTPMethod.post.rawValue
+    
+    let boundary: String = UUID().uuidString
     
 }
