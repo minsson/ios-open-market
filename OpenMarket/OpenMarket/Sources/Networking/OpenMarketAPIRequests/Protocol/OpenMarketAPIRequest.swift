@@ -27,6 +27,18 @@ protocol OpenMarketAPIRequestSettable: OpenMarketAPIRequest {
     
 }
 
+extension OpenMarketAPIRequest {
+    
+    var urlHost: String {
+        return "https://openmarket.yagom-academy.kr/"
+    }
+    
+    var urlPath: String {
+        return "api/products"
+    }
+    
+}
+
 extension OpenMarketAPIRequestGettable {
     
     var url: URL? {

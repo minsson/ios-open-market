@@ -11,9 +11,6 @@ struct OpenMarketAPIRequestPost: OpenMarketAPIRequest, OpenMarketAPIRequestSetta
     
     var image: UIImage
     
-    var urlHost = "https://openmarket.yagom-academy.kr/"
-    var urlPath = "api/products"
-        
     var httpMethod: String = HTTPMethod.post.rawValue
     
 }
