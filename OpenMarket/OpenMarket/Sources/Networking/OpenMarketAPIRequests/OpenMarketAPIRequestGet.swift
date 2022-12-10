@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct OpenMarketAPIRequestGet: OpenMarketAPIRequest {
+struct OpenMarketAPIRequestGet: OpenMarketAPIRequest, OpenMarketAPIRequestGettable {
     
     var urlHost = "https://openmarket.yagom-academy.kr/"
     var urlPath = "api/products"
@@ -16,8 +16,6 @@ struct OpenMarketAPIRequestGet: OpenMarketAPIRequest {
         "items_per_page": "100"
     ]
     
-    var httpHeader: [String : String]? = nil
     var httpMethod: String = HTTPMethod.get.rawValue
-    var httpBody: Data? = nil
 
 }

@@ -28,6 +28,7 @@
 		FDB99C26289A5CD7001B10BE /* ItemDataHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB99C25289A5CD7001B10BE /* ItemDataHandling.swift */; };
 		FDB99C28289A8DC5001B10BE /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB99C27289A8DC5001B10BE /* ContainerViewController.swift */; };
 		FDCCEE07293FCE19004C3764 /* OpenMarketAPIRequestGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCCEE06293FCE19004C3764 /* OpenMarketAPIRequestGet.swift */; };
+		FDD83F6729432EEA00AC7E2D /* OpenMarketAPIRequestPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD83F6629432EEA00AC7E2D /* OpenMarketAPIRequestPost.swift */; };
 		FDE9CB692880024800A78B24 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE9CB682880024800A78B24 /* NetworkManager.swift */; };
 		FDE9CB9A2881546300A78B24 /* DataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE9CB992881546300A78B24 /* DataManagerTests.swift */; };
 		FDE9CBA6288158F200A78B24 /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE9CBA5288158F200A78B24 /* NetworkingError.swift */; };
@@ -68,6 +69,7 @@
 		FDB99C25289A5CD7001B10BE /* ItemDataHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDataHandling.swift; sourceTree = "<group>"; };
 		FDB99C27289A8DC5001B10BE /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		FDCCEE06293FCE19004C3764 /* OpenMarketAPIRequestGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMarketAPIRequestGet.swift; sourceTree = "<group>"; };
+		FDD83F6629432EEA00AC7E2D /* OpenMarketAPIRequestPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMarketAPIRequestPost.swift; sourceTree = "<group>"; };
 		FDE9CB682880024800A78B24 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		FDE9CB972881546300A78B24 /* DataManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DataManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDE9CB992881546300A78B24 /* DataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagerTests.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 			children = (
 				FDCCEE05293FCDEE004C3764 /* Protocol */,
 				FDCCEE06293FCE19004C3764 /* OpenMarketAPIRequestGet.swift */,
+				FDD83F6629432EEA00AC7E2D /* OpenMarketAPIRequestPost.swift */,
 			);
 			path = OpenMarketAPIRequests;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDD83F6729432EEA00AC7E2D /* OpenMarketAPIRequestPost.swift in Sources */,
 				42DEC534289A6B2A0090D35F /* CellConfigurable.swift in Sources */,
 				FDB99C23289A5C36001B10BE /* Section.swift in Sources */,
 				FDCCEE07293FCE19004C3764 /* OpenMarketAPIRequestGet.swift in Sources */,

@@ -174,10 +174,23 @@ private extension ItemRegistrationViewController {
     }
 
     @objc func pushDataToServer() {
-        // TODO: 데이터 취합
-        // TODO: NetworkManager를 통해 Post하는 메서드 사용
+        // TODO: 실제 TextField에 입력된 데이터를 모아 request에 넣기
+        
+        let image: UIImage = addingPhotoButtonImageView.image ?? UIImage()
+        
+        guard let request = OpenMarketAPIRequestPost(image: image).urlRequest else {
+            return
+        }
+        
+        // TODO: 네트워킹 방법 변경
+        URLSession.shared.dataTask(with: request) { Data, response, error in
+            if let error = error {
+                print(error)
+                return
+            }
+        }.resume()
     }
-
+    
     // MARK: - Actions for Image Picker
 
     func configureImagePicker() {
