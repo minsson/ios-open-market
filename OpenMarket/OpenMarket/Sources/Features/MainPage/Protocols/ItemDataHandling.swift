@@ -32,7 +32,7 @@ extension ItemDataHandling {
         ) { (result: Result<Data, NetworkingError>) in
             switch result {
             case .success(let data):
-                self.itemListPage = NetworkManager.parse(
+                self.itemListPage = NetworkManager.decode(
                     data,
                     into: ItemListPage.self
                 )
