@@ -9,10 +9,10 @@ import UIKit
 
 struct OpenMarketAPIRequestPost: OpenMarketAPIRequest, OpenMarketAPIRequestSettable {
     
+    var jsonData: Data?
     var image: UIImage
     
-    let httpMethod: String = HTTPMethod.post.rawValue
-    
     let boundary: String = UUID().uuidString
+    let httpMethod: String = HTTPMethod.post.rawValue
     
 }

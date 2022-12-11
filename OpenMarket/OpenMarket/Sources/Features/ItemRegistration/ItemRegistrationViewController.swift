@@ -45,7 +45,7 @@ final class ItemRegistrationViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var bargainPriceTextField = editingTextField(placeholder: "할인금액")
+    private lazy var discountedPriceTextField = editingTextField(placeholder: "할인금액")
     
     private lazy var stockTextField = editingTextField(placeholder: "재고수량")
     
@@ -144,7 +144,7 @@ private extension ItemRegistrationViewController {
         entireVerticalStackView.addArrangedSubview(addingPhotoButtonImageView)
         entireVerticalStackView.addArrangedSubview(nameTextField)
         entireVerticalStackView.addArrangedSubview(firstRowHorizontalStackView)
-        entireVerticalStackView.addArrangedSubview(bargainPriceTextField)
+        entireVerticalStackView.addArrangedSubview(discountedPriceTextField)
         entireVerticalStackView.addArrangedSubview(stockTextField)
         entireVerticalStackView.addArrangedSubview(textView)
     }
@@ -157,7 +157,6 @@ private extension ItemRegistrationViewController {
     func configureComponents() {
         configureDoneButton()
         configureImagePicker()
-        configureTargetForSegmentedControl()
         configureAddingPhotoButtonImageView()
     }
 
@@ -172,13 +171,46 @@ private extension ItemRegistrationViewController {
 
         self.navigationItem.rightBarButtonItem = doneButton
     }
+    
+    func assembleInputData() -> Data? {
+        guard let name = nameTextField.text,
+              let priceText = priceTextField.text,
+              let price = Double(priceText),
+              let discountedPriceText = discountedPriceTextField.text,
+              let stockText = stockTextField.text,
+              let descriptionText = textView.text else {
+            return nil
+        }
+        
+        let discountedPrice = Double(discountedPriceText) ?? 0
+        let stock = Int(stockText) ?? 0
+        let currency = currencySegmentedControl.selectedSegmentIndex == 0 ? Currency.krw : Currency.usd
+        
+        let requestItem = RequestItem(
+            name: name,
+            price: price,
+            discountedPrice: discountedPrice,
+            currency: currency.rawValue,
+            stock: stock,
+            description: descriptionText
+        )
+        
+        do {
+            let requestItemData = try JSONEncoder().encode(requestItem)
+            return requestItemData
+        } catch {
+            return nil
+        }
+    }
 
     @objc func pushDataToServer() {
-        // TODO: 실제 TextField에 입력된 데이터를 모아 request에 넣기
-        
         let image: UIImage = addingPhotoButtonImageView.image ?? UIImage()
         
-        guard let request = OpenMarketAPIRequestPost(image: image).urlRequest else {
+        guard let inputData = assembleInputData() else {
+            return
+        }
+        
+        guard let request = OpenMarketAPIRequestPost(jsonData: inputData, image: image).urlRequest else {
             return
         }
         
@@ -200,21 +232,6 @@ private extension ItemRegistrationViewController {
 
     @objc func openImagePicker() {
         present(imagePicker, animated: true)
-    }
-
-    // MARK: - Actions for Segmented Control
-
-    func configureTargetForSegmentedControl() {
-        currencySegmentedControl.addTarget(
-            self,
-            action: #selector(switchCurrency),
-            for: .valueChanged
-        )
-    }
-
-    @objc func switchCurrency(segmentedControl: UISegmentedControl) {
-        // TODO: 환율 고르는 게 POST 할 때 반영되도록 수정
-        print("TODO: 환율 고르는 게 POST 할 때 반영되도록 수정")
     }
 
     // MARK: - Actions for AddingPhotoButtonImageView
@@ -243,4 +260,26 @@ extension ItemRegistrationViewController: UIImagePickerControllerDelegate {
 
 extension ItemRegistrationViewController: UINavigationControllerDelegate {
 
+}
+
+// MARK: - Nested Type
+
+extension ItemRegistrationViewController {
+    
+    struct RequestItem: Encodable {
+        
+        let name: String?
+        let price, discountedPrice: Double
+        let currency: String
+        let stock: Int
+        let description: String
+        let secret: String = "ebs12345"
+        
+        private enum CodingKeys: String, CodingKey {
+            case name, price, currency, stock, description, secret
+            case discountedPrice = "discounted_price"
+        }
+        
+    }
+    
 }

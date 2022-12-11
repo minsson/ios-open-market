@@ -88,6 +88,7 @@ extension OpenMarketAPIRequestSettable {
 
 protocol MultipartFormDataHandleable {
     
+    var jsonData: Data? { get }
     var boundary: String { get }
     var image: UIImage { get }
     
@@ -95,14 +96,18 @@ protocol MultipartFormDataHandleable {
 
 extension MultipartFormDataHandleable {
     
-    var multipartFormBody: Data {
+    var multipartFormBody: Data? {
         var body = Data()
         let lineBreak = "\r\n"
         
+        guard let jsonData = jsonData else {
+            return nil
+        }
+        
         body.append("--\(boundary + lineBreak)")
         body.append("Content-Disposition: form-data; name=\"params\"\(lineBreak + lineBreak)")
-        let temporaryData = "{\"name\": \"민\", \"price\": 15000, \"stock\":1000, \"currency\": \"KRW\", \"secret\": \"ebs12345\", \"description\": \"화이팅\"}"
-        body.append("\(temporaryData + lineBreak)")
+        body.append(jsonData)
+        body.append("\(lineBreak)")
         
         body.append("--\(boundary + lineBreak)")
         body.append("Content-Disposition: form-data; name=\"images\"; filename=\"\(UUID().uuidString).jpg\"\(lineBreak)")

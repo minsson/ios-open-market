@@ -13,9 +13,9 @@ enum Currency: String, Decodable {
     var index: Int {
         switch self {
         case .krw:
-            return 1
+            return 0
         case .usd:
-            return 2
+            return 1
         }
     }
 }
