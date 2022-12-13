@@ -93,7 +93,7 @@ final class ItemRegistrationViewController: UIViewController {
         return imagePicker
     }()
     
-    private var selectedPhotos: [UIImageView] = []
+    private var selectedPhotos: [UIImage] = []
     
     // MARK: - Life Cycles
     
@@ -237,13 +237,13 @@ private extension ItemRegistrationViewController {
     @objc func pushDataToServer() {
         // TODO: 실제 선택된 이미지 모두 전송하도록 수정
         // TODO: 이미지 최대 5장까지 선택할 수 있도록 수정
-        let image: UIImage = addingPhotoButtonImageView.image ?? UIImage()
+        
         
         guard let inputData = assembleInputData() else {
             return
         }
         
-        guard let request = OpenMarketAPIRequestPost(jsonData: inputData, image: image).urlRequest else {
+        guard let request = OpenMarketAPIRequestPost(jsonData: inputData, images: selectedPhotos).urlRequest else {
             return
         }
         
@@ -287,9 +287,9 @@ extension ItemRegistrationViewController: UIImagePickerControllerDelegate {
         let selectedPhoto = UIImageView(image: image)
         selectedPhoto.layer.cornerRadius = 10
         selectedPhoto.clipsToBounds = true
-        
         photoStackView.addArrangedSubview(selectedPhoto)
-        selectedPhotos.append(selectedPhoto)
+        
+        selectedPhotos.append(image)
         
         dismiss(animated: true)
     }

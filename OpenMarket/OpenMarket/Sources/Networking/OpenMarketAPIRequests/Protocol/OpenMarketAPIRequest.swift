@@ -90,7 +90,7 @@ protocol MultipartFormDataHandleable {
     
     var jsonData: Data? { get }
     var boundary: String { get }
-    var image: UIImage { get }
+    var images: [UIImage] { get }
     
 }
 
@@ -109,11 +109,14 @@ extension MultipartFormDataHandleable {
         body.append(jsonData)
         body.append("\(lineBreak)")
         
-        body.append("--\(boundary + lineBreak)")
-        body.append("Content-Disposition: form-data; name=\"images\"; filename=\"\(UUID().uuidString).jpg\"\(lineBreak)")
-        body.append("Content-Type: image/jpeg\(lineBreak + lineBreak)")
-        body.append(image.jpegData(compressionQuality: 0.1)!)
-        body.append(lineBreak)
+        images.forEach { image in
+            body.append("--\(boundary + lineBreak)")
+            body.append("Content-Disposition: form-data; name=\"images\"; filename=\"\(UUID().uuidString).jpg\"\(lineBreak)")
+            body.append("Content-Type: image/jpeg\(lineBreak + lineBreak)")
+            body.append(image.jpegData(compressionQuality: 0.1)!)
+            body.append(lineBreak)
+        }
+        
         body.append("--\(boundary)--\(lineBreak)")
         
         return body
