@@ -11,14 +11,33 @@ final class ItemRegistrationViewController: UIViewController {
     
     // MARK: - UI Components
     
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.alwaysBounceHorizontal = true
+        return scrollView
+    }()
+    
     private let addingPhotoButtonImageView: UIImageView = {
-        // TODO: 추후 Image Picker 및 선택된 사진들을 보여주기 위한 컬렉션 뷰로 대체
         let addingPhotoButtonImageView = UIImageView()
-        addingPhotoButtonImageView.image = UIImage(systemName: "plus")
-        addingPhotoButtonImageView.backgroundColor = .gray
+        addingPhotoButtonImageView.translatesAutoresizingMaskIntoConstraints = false
+        addingPhotoButtonImageView.image = UIImage(systemName: "camera")
+        addingPhotoButtonImageView.contentMode = .scaleAspectFit
+        addingPhotoButtonImageView.tintColor = .systemGray
+        addingPhotoButtonImageView.backgroundColor = .clear
+        addingPhotoButtonImageView.layer.borderWidth = 0.3
         addingPhotoButtonImageView.layer.cornerRadius = 10
         addingPhotoButtonImageView.clipsToBounds = true
         return addingPhotoButtonImageView
+    }()
+    
+    private let photoStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = 10
+        stackView.distribution = .fillEqually
+        return stackView
     }()
     
     private lazy var nameTextField = editingTextField(placeholder: "상품명")
@@ -38,10 +57,10 @@ final class ItemRegistrationViewController: UIViewController {
     
     private let firstRowHorizontalStackView: UIStackView = {
         let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
         stackView.spacing = 2
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
@@ -59,11 +78,11 @@ final class ItemRegistrationViewController: UIViewController {
     
     private let entireVerticalStackView: UIStackView = {
         let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .fill
         stackView.axis = .vertical
         stackView.spacing = 8
         stackView.distribution = .fill
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
@@ -73,6 +92,8 @@ final class ItemRegistrationViewController: UIViewController {
         let imagePicker = UIImagePickerController()
         return imagePicker
     }()
+    
+    private var selectedPhotos: [UIImageView] = []
     
     // MARK: - Life Cycles
     
@@ -100,7 +121,14 @@ private extension ItemRegistrationViewController {
         NSLayoutConstraint.activate([
             currencySegmentedControl.widthAnchor.constraint(equalToConstant: 100),
             
-            addingPhotoButtonImageView.heightAnchor.constraint(equalToConstant: 80),
+            addingPhotoButtonImageView.widthAnchor.constraint(equalToConstant: 100),
+            addingPhotoButtonImageView.heightAnchor.constraint(equalToConstant: 100),
+            
+            photoStackView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+            photoStackView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            photoStackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            photoStackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            photoStackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             
             entireVerticalStackView.topAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.topAnchor
@@ -141,7 +169,10 @@ private extension ItemRegistrationViewController {
         firstRowHorizontalStackView.addArrangedSubview(priceTextField)
         firstRowHorizontalStackView.addArrangedSubview(currencySegmentedControl)
         
-        entireVerticalStackView.addArrangedSubview(addingPhotoButtonImageView)
+        scrollView.addSubview(photoStackView)
+        photoStackView.addArrangedSubview(addingPhotoButtonImageView)
+        
+        entireVerticalStackView.addArrangedSubview(scrollView)
         entireVerticalStackView.addArrangedSubview(nameTextField)
         entireVerticalStackView.addArrangedSubview(firstRowHorizontalStackView)
         entireVerticalStackView.addArrangedSubview(discountedPriceTextField)
@@ -204,6 +235,8 @@ private extension ItemRegistrationViewController {
     }
 
     @objc func pushDataToServer() {
+        // TODO: 실제 선택된 이미지 모두 전송하도록 수정
+        // TODO: 이미지 최대 5장까지 선택할 수 있도록 수정
         let image: UIImage = addingPhotoButtonImageView.image ?? UIImage()
         
         guard let inputData = assembleInputData() else {
@@ -248,10 +281,16 @@ private extension ItemRegistrationViewController {
 extension ItemRegistrationViewController: UIImagePickerControllerDelegate {
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.originalImage] as? UIImage {
-            self.addingPhotoButtonImageView.image = image
+        guard let image = info[.originalImage] as? UIImage else {
+            return
         }
-
+        let selectedPhoto = UIImageView(image: image)
+        selectedPhoto.layer.cornerRadius = 10
+        selectedPhoto.clipsToBounds = true
+        
+        photoStackView.addArrangedSubview(selectedPhoto)
+        selectedPhotos.append(selectedPhoto)
+        
         dismiss(animated: true)
     }
 }
