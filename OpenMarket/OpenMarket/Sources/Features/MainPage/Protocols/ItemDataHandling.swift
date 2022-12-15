@@ -23,7 +23,7 @@ protocol ItemDataHandling: AnyObject {
 extension ItemDataHandling {
     func createNetworkRequest(using httpMethod: HTTPMethod) {
         
-        guard let urlRequest = OpenMarketAPIRequestGet().urlRequest else {
+        guard let urlRequest = API.LookUpItems().urlRequest else {
             return
         }
         

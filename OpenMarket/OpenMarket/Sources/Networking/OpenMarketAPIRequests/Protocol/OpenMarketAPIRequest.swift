@@ -17,7 +17,8 @@ protocol OpenMarketAPIRequest {
 
 protocol OpenMarketAPIRequestGettable: OpenMarketAPIRequest {
     
-    var queryItems: [String: String] { get }
+    var queryItems: [String: String]? { get }
+    var productID: String? { get }
     
 }
 
@@ -30,18 +31,29 @@ extension OpenMarketAPIRequest {
     }
     
     var urlPath: String {
-        return "api/products"
+        return "api/products/"
     }
     
 }
 
+
 extension OpenMarketAPIRequestGettable {
     
+    var httpMethod: String {
+        return HTTPMethod.get.rawValue
+    }
+    
     var url: URL? {
+        
         var urlComponents = URLComponents(string: urlHost + urlPath)
-        urlComponents?.queryItems = self.queryItems.map {
+        
+        let queryItems = queryItems ?? [:]
+        urlComponents?.queryItems = queryItems.map {
             URLQueryItem(name: $0.key, value: $0.value)
         }
+        
+        let productID = productID ?? ""
+        urlComponents?.path += productID
         
         return urlComponents?.url
     }
@@ -56,8 +68,6 @@ extension OpenMarketAPIRequestGettable {
     }
     
 }
-
-
 
 extension OpenMarketAPIRequestSettable {
     
@@ -77,8 +87,6 @@ extension OpenMarketAPIRequestSettable {
         request.httpMethod = "POST"
         request.setValue("7184295e-4aa1-11ed-a200-354cb82ae52e", forHTTPHeaderField: "identifier")
         request.setValue("multipart/form-data; boundary=" + boundary, forHTTPHeaderField: "Content-type")
-        
-        // TODO: temporaryData를 실제 데이터로 교체하기
         
         request.httpBody = multipartFormBody
         return request
