@@ -10,19 +10,22 @@ final class ListCollectionViewController: UIViewController, ItemDataHandling {
     
     // MARK: - Properties
     
-    lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: createListLayout()
-        )
-        return collectionView
-    }()
-    
     typealias ItemSnapShot = NSDiffableDataSourceSnapshot<Section, ItemListPage.Item>
     
     lazy var dataSource = configureListDataSource()
     
     var itemListPage: ItemListPage?
+    
+    // MARK: - UI Properties
+    
+    lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: createListLayout()
+        )
+        collectionView.delegate = self
+        return collectionView
+    }()
     
     // MARK: - Life Cycles
     
@@ -34,11 +37,13 @@ final class ListCollectionViewController: UIViewController, ItemDataHandling {
         
         createNetworkRequest(using: HTTPMethod.get)
     }
+    
 }
 
 // MARK: - Private Actions
 
 private extension ListCollectionViewController {
+    
     func setUpCollectionViewLayout() {
         self.view.addSubview(collectionView)
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -105,4 +110,22 @@ private extension ListCollectionViewController {
             return cell
         }
     }
+
+}
+
+
+extension ListCollectionViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        guard let item = dataSource.itemIdentifier(for: indexPath) else {
+            return
+        }
+
+        let itemDetailViewController = ItemDetailViewController()
+        itemDetailViewController.setupProductID(productID: String(item.id))
+    
+        self.navigationController?.pushViewController(itemDetailViewController, animated: true)
+    }
+    
 }

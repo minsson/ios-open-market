@@ -15,10 +15,12 @@ extension UIImageView {
         let cachedKey = NSString(string: url)
         let session = URLSession.shared
         
-        if let cachedImage = ImageCacheManager.shared.object(forKey: cachedKey) {
-            self.image = cachedImage
-            
-            return nil
+        DispatchQueue.main.async { [weak self] in
+            if let cachedImage = ImageCacheManager.shared.object(forKey: cachedKey) {
+                self?.image = cachedImage
+
+                return
+            }
         }
         
         guard let url = URL(string: url) else {

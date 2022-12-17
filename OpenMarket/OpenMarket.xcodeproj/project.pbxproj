@@ -31,6 +31,7 @@
 		FDD140A2294B19E900B72DDD /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD140A1294B19E900B72DDD /* API.swift */; };
 		FDD140A4294B1A4800B72DDD /* API+LookUpItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD140A3294B1A4800B72DDD /* API+LookUpItems.swift */; };
 		FDD83F6729432EEA00AC7E2D /* OpenMarketAPIRequestPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD83F6629432EEA00AC7E2D /* OpenMarketAPIRequestPost.swift */; };
+		FDD83F7B2948F4B000AC7E2D /* ItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD83F7A2948F4B000AC7E2D /* ItemDetailViewController.swift */; };
 		FDD83F7D2948F5FA00AC7E2D /* ItemDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD83F7C2948F5FA00AC7E2D /* ItemDetail.swift */; };
 		FDE9CB692880024800A78B24 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE9CB682880024800A78B24 /* NetworkManager.swift */; };
 		FDE9CB9A2881546300A78B24 /* DataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE9CB992881546300A78B24 /* DataManagerTests.swift */; };
@@ -75,6 +76,7 @@
 		FDD140A1294B19E900B72DDD /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		FDD140A3294B1A4800B72DDD /* API+LookUpItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+LookUpItems.swift"; sourceTree = "<group>"; };
 		FDD83F6629432EEA00AC7E2D /* OpenMarketAPIRequestPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMarketAPIRequestPost.swift; sourceTree = "<group>"; };
+		FDD83F7A2948F4B000AC7E2D /* ItemDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailViewController.swift; sourceTree = "<group>"; };
 		FDD83F7C2948F5FA00AC7E2D /* ItemDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetail.swift; sourceTree = "<group>"; };
 		FDE9CB682880024800A78B24 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		FDE9CB972881546300A78B24 /* DataManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DataManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -278,6 +280,7 @@
 		FDD83F792948F47100AC7E2D /* ItemDetail */ = {
 			isa = PBXGroup;
 			children = (
+				FDD83F7A2948F4B000AC7E2D /* ItemDetailViewController.swift */,
 				FDD83F7C2948F5FA00AC7E2D /* ItemDetail.swift */,
 			);
 			path = ItemDetail;
@@ -412,6 +415,7 @@
 				FDE9CB692880024800A78B24 /* NetworkManager.swift in Sources */,
 				4252740C287D700C00A63D7F /* ItemListPage.swift in Sources */,
 				C70FB0FB25BEF61C00C9924E /* AppDelegate.swift in Sources */,
+				FDD83F7B2948F4B000AC7E2D /* ItemDetailViewController.swift in Sources */,
 				42DEC531289A6AB30090D35F /* ItemGridCollectionViewCell.swift in Sources */,
 				C70FB0FD25BEF61C00C9924E /* SceneDelegate.swift in Sources */,
 				FD0A105628A2D189003C8CBC /* OpenMarketAPIRequest.swift in Sources */,
