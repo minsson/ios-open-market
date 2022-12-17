@@ -23,6 +23,14 @@ final class ItemDetailViewController: UIViewController {
         return scrollView
     }()
     
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "photo")
+        imageView.contentMode = .scaleToFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     private let entireVerticalStackView: UIStackView = {
         let entireVerticalStackView = UIStackView()
         entireVerticalStackView.alignment = .center
@@ -31,14 +39,6 @@ final class ItemDetailViewController: UIViewController {
         entireVerticalStackView.distribution = .fill
         entireVerticalStackView.translatesAutoresizingMaskIntoConstraints = false
         return entireVerticalStackView
-    }()
-    
-    private let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "photo")
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
     }()
     
     private let nameLabel: UILabel = {
@@ -136,28 +136,29 @@ private extension ItemDetailViewController {
     
     func setupLayoutConstraints() {
         NSLayoutConstraint.activate([
+            imageView.heightAnchor.constraint(equalToConstant: 400),
+            imageView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            imageView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            
             entireVerticalStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            entireVerticalStackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            entireVerticalStackView.topAnchor.constraint(equalTo: imageView.bottomAnchor),
             entireVerticalStackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             entireVerticalStackView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             entireVerticalStackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            
-            imageView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: 300)
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
     }
     
     func addSubViews() {
         view.addSubview(scrollView)
         
+        scrollView.addSubview(imageView)
         scrollView.addSubview(entireVerticalStackView)
         
-        entireVerticalStackView.addArrangedSubview(imageView)
         entireVerticalStackView.addArrangedSubview(nameLabel)
         entireVerticalStackView.addArrangedSubview(priceLabel)
         entireVerticalStackView.addArrangedSubview(bargainPriceLabel)
