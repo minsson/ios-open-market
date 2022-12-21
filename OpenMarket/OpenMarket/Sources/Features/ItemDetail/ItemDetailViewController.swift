@@ -13,25 +13,36 @@ final class ItemDetailViewController: UIViewController {
     
     private var productID: String?
     private var itemDetail: ItemDetail?
-    private var imageRequest: URLSessionTask?
+    private var imageRequests: [URLSessionTask?] = []
     
     // MARK: - UI Properties
     
-    private let scrollView: UIScrollView = {
+    private let entireVerticalScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
     
-    private let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "photo")
-        imageView.contentMode = .scaleToFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+    private let imagesScrollView: UIScrollView = {
+        let imagesScrollView = UIScrollView()
+        imagesScrollView.translatesAutoresizingMaskIntoConstraints = false
+        imagesScrollView.showsHorizontalScrollIndicator = false
+        imagesScrollView.isPagingEnabled = true
+        return imagesScrollView
     }()
     
-    private let entireVerticalStackView: UIStackView = {
+    private let imagesHorizontalStackView: UIStackView = {
+        let imagesHorizontalStackView = UIStackView()
+        imagesHorizontalStackView.alignment = .center
+        imagesHorizontalStackView.axis = .horizontal
+        imagesHorizontalStackView.distribution = .fillEqually
+        imagesHorizontalStackView.backgroundColor = .systemGray
+        imagesHorizontalStackView.translatesAutoresizingMaskIntoConstraints = false
+        return imagesHorizontalStackView
+    }()
+    
+    private let detailInformationLabelsVerticalStackView: UIStackView = {
         let entireVerticalStackView = UIStackView()
         entireVerticalStackView.alignment = .center
         entireVerticalStackView.axis = .vertical
@@ -44,7 +55,6 @@ final class ItemDetailViewController: UIViewController {
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
-        label.text = "TEST"
         return label
     }()
     
@@ -87,14 +97,16 @@ final class ItemDetailViewController: UIViewController {
         retrieveItemDetail()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
         
-        imageRequest?.cancel()
+        imageRequests.forEach { urlSessionTask in
+            urlSessionTask?.cancel()
+        }
     }
 }
 
-// MARK: - Private Actions
+// MARK: - Actions
 
 extension ItemDetailViewController {
     
@@ -135,41 +147,60 @@ private extension ItemDetailViewController {
     }
     
     func setupLayoutConstraints() {
+        let imageHeight = view.frame.height / CGFloat(2) - CGFloat(50)
+        
         NSLayoutConstraint.activate([
-            imageView.heightAnchor.constraint(equalToConstant: 400),
-            imageView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            imageView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            imagesScrollView.topAnchor.constraint(equalTo: entireVerticalScrollView.topAnchor),
+            imagesScrollView.leadingAnchor.constraint(equalTo: entireVerticalScrollView.leadingAnchor),
+            imagesScrollView.trailingAnchor.constraint(equalTo: entireVerticalScrollView.trailingAnchor),
+            imagesScrollView.bottomAnchor.constraint(equalTo: detailInformationLabelsVerticalStackView.topAnchor),
             
-            entireVerticalStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            entireVerticalStackView.topAnchor.constraint(equalTo: imageView.bottomAnchor),
-            entireVerticalStackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            entireVerticalStackView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            entireVerticalStackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            imagesHorizontalStackView.heightAnchor.constraint(equalToConstant: imageHeight),
+            imagesHorizontalStackView.heightAnchor.constraint(equalTo: imagesScrollView.heightAnchor),
+            imagesHorizontalStackView.topAnchor.constraint(equalTo: imagesScrollView.topAnchor),
+            imagesHorizontalStackView.bottomAnchor.constraint(equalTo: imagesScrollView.contentLayoutGuide.bottomAnchor),
+            imagesHorizontalStackView.leadingAnchor.constraint(equalTo: imagesScrollView.contentLayoutGuide.leadingAnchor),
+            imagesHorizontalStackView.trailingAnchor.constraint(equalTo: imagesScrollView.contentLayoutGuide.trailingAnchor),
+
+            detailInformationLabelsVerticalStackView.widthAnchor.constraint(equalTo: entireVerticalScrollView.widthAnchor),
+            detailInformationLabelsVerticalStackView.topAnchor.constraint(equalTo: imagesScrollView.bottomAnchor),
+            detailInformationLabelsVerticalStackView.bottomAnchor.constraint(equalTo: entireVerticalScrollView.contentLayoutGuide.bottomAnchor),
+            detailInformationLabelsVerticalStackView.leadingAnchor.constraint(equalTo: entireVerticalScrollView.contentLayoutGuide.leadingAnchor),
+            detailInformationLabelsVerticalStackView.trailingAnchor.constraint(equalTo: entireVerticalScrollView.contentLayoutGuide.trailingAnchor),
             
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            entireVerticalScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            entireVerticalScrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            entireVerticalScrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            entireVerticalScrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
     }
     
     func addSubViews() {
-        view.addSubview(scrollView)
+        view.addSubview(entireVerticalScrollView)
         
-        scrollView.addSubview(imageView)
-        scrollView.addSubview(entireVerticalStackView)
+        entireVerticalScrollView.addSubview(imagesScrollView)
+        entireVerticalScrollView.addSubview(detailInformationLabelsVerticalStackView)
         
-        entireVerticalStackView.addArrangedSubview(nameLabel)
-        entireVerticalStackView.addArrangedSubview(priceLabel)
-        entireVerticalStackView.addArrangedSubview(bargainPriceLabel)
-        entireVerticalStackView.addArrangedSubview(stockLabel)
-        entireVerticalStackView.addArrangedSubview(descriptionLabel)
+        imagesScrollView.addSubview(imagesHorizontalStackView)
+        
+        detailInformationLabelsVerticalStackView.addArrangedSubview(nameLabel)
+        detailInformationLabelsVerticalStackView.addArrangedSubview(priceLabel)
+        detailInformationLabelsVerticalStackView.addArrangedSubview(bargainPriceLabel)
+        detailInformationLabelsVerticalStackView.addArrangedSubview(stockLabel)
+        detailInformationLabelsVerticalStackView.addArrangedSubview(descriptionLabel)
     }
     
     func setupUIComponents(with itemDetail: ItemDetail) {
         view.backgroundColor = .systemBackground
-        
-        imageRequest = imageView.setImageURL(itemDetail.images[0].url)
+    
+        itemDetail.images.forEach { image in
+            let imageView = UIImageView()
+            imageView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+            imagesHorizontalStackView.addArrangedSubview(imageView)
+            
+            let imageRequest: URLSessionTask? = imageView.setImageURL(image.url)
+            imageRequests.append(imageRequest)
+        }
         
         nameLabel.text = itemDetail.name
         priceLabel.text = itemDetail.price.applyFormat(currency: itemDetail.currency)
