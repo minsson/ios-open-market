@@ -1,13 +1,13 @@
 //
-//  ItemRegistrationViewController.swift
+//  ItemSellingViewController.swift
 //  OpenMarket
 //
-//  Created by minsson on 2022/08/14.
+//  Created by minsson on 2022/12/22.
 //
 
 import UIKit
 
-final class ItemRegistrationViewController: UIViewController {
+class ItemSellingViewController: UIViewController {
     
     // MARK: - UI Components
     
@@ -18,7 +18,7 @@ final class ItemRegistrationViewController: UIViewController {
         return scrollView
     }()
     
-    private let addingPhotoButtonImageView: UIImageView = {
+    let addingPhotoButtonImageView: UIImageView = {
         let addingPhotoButtonImageView = UIImageView()
         addingPhotoButtonImageView.translatesAutoresizingMaskIntoConstraints = false
         addingPhotoButtonImageView.image = UIImage(systemName: "camera")
@@ -31,7 +31,7 @@ final class ItemRegistrationViewController: UIViewController {
         return addingPhotoButtonImageView
     }()
     
-    private let photoStackView: UIStackView = {
+    let photoStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
@@ -40,11 +40,11 @@ final class ItemRegistrationViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var nameTextField = editingTextField(placeholder: "상품명")
+    lazy var nameTextField = editingTextField(placeholder: "상품명")
     
-    private lazy var priceTextField = editingTextField(placeholder: "상품가격")
+    lazy var priceTextField = editingTextField(placeholder: "상품가격")
     
-    private let currencySegmentedControl: UISegmentedControl = {
+    let currencySegmentedControl: UISegmentedControl = {
         let selectionItems = [
             UIImage(systemName: "wonsign"),
             UIImage(systemName: "dollarsign")
@@ -64,11 +64,11 @@ final class ItemRegistrationViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var discountedPriceTextField = editingTextField(placeholder: "할인금액")
+    lazy var discountedPriceTextField = editingTextField(placeholder: "할인금액")
     
-    private lazy var stockTextField = editingTextField(placeholder: "재고수량")
+    lazy var stockTextField = editingTextField(placeholder: "재고수량")
     
-    private let textView: UITextView = {
+    let textView: UITextView = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.keyboardDismissMode = .interactive
@@ -107,7 +107,7 @@ final class ItemRegistrationViewController: UIViewController {
 
 // MARK: - Private Actions for UI
 
-private extension ItemRegistrationViewController {
+private extension ItemSellingViewController {
     
     // MARK: - Private Actions for AutoLayout
     
@@ -183,7 +183,7 @@ private extension ItemRegistrationViewController {
 
 // MARK: - Actions for configuration of Components
 
-private extension ItemRegistrationViewController {
+private extension ItemSellingViewController {
 
     func configureComponents() {
         configureDoneButton()
@@ -217,7 +217,7 @@ private extension ItemRegistrationViewController {
         let stock = Int(stockText) ?? 0
         let currency = currencySegmentedControl.selectedSegmentIndex == 0 ? Currency.krw : Currency.usd
         
-        let requestItem = RequestItem(
+        let requestItem = Item(
             name: name,
             price: price,
             discountedPrice: discountedPrice,
@@ -235,10 +235,6 @@ private extension ItemRegistrationViewController {
     }
 
     @objc func pushDataToServer() {
-        // TODO: 실제 선택된 이미지 모두 전송하도록 수정
-        // TODO: 이미지 최대 5장까지 선택할 수 있도록 수정
-        
-        
         guard let inputData = assembleInputData() else {
             return
         }
@@ -278,7 +274,7 @@ private extension ItemRegistrationViewController {
 
 // MARK: - UIImagePickerControllerDelegate
 
-extension ItemRegistrationViewController: UIImagePickerControllerDelegate {
+extension ItemSellingViewController: UIImagePickerControllerDelegate {
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.originalImage] as? UIImage else {
@@ -293,19 +289,20 @@ extension ItemRegistrationViewController: UIImagePickerControllerDelegate {
         
         dismiss(animated: true)
     }
+    
 }
 
 // MARK: - UINavigationControllerDelegate
 
-extension ItemRegistrationViewController: UINavigationControllerDelegate {
+extension ItemSellingViewController: UINavigationControllerDelegate {
 
 }
 
 // MARK: - Nested Type
 
-extension ItemRegistrationViewController {
+extension ItemSellingViewController {
     
-    struct RequestItem: Encodable {
+    struct Item: Encodable {
         
         let name: String?
         let price, discountedPrice: Double
@@ -313,10 +310,12 @@ extension ItemRegistrationViewController {
         let stock: Int
         let description: String
         let secret: String = "ebs12345"
+        let thumbnailID: Int? = nil
         
         private enum CodingKeys: String, CodingKey {
             case name, price, currency, stock, description, secret
             case discountedPrice = "discounted_price"
+            case thumbnailID = "thumbnail_id"
         }
         
     }

@@ -25,6 +25,8 @@
 		FD0A105828A2E06C003C8CBC /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0A105728A2E06C003C8CBC /* HTTPMethod.swift */; };
 		FD7B05DE294BA85A004AAB94 /* API+LookUpItemDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7B05DD294BA85A004AAB94 /* API+LookUpItemDetail.swift */; };
 		FD8ED59D28A8532B00F631F2 /* ItemRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8ED59C28A8532B00F631F2 /* ItemRegistrationViewController.swift */; };
+		FDAEEEE829548BDD00367BBE /* ItemEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAEEEE729548BDD00367BBE /* ItemEditingViewController.swift */; };
+		FDAEEEEA29548FA700367BBE /* ItemSellingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAEEEE929548FA700367BBE /* ItemSellingViewController.swift */; };
 		FDB99C23289A5C36001B10BE /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB99C22289A5C36001B10BE /* Section.swift */; };
 		FDB99C26289A5CD7001B10BE /* ItemDataHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB99C25289A5CD7001B10BE /* ItemDataHandling.swift */; };
 		FDB99C28289A8DC5001B10BE /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB99C27289A8DC5001B10BE /* ContainerViewController.swift */; };
@@ -70,6 +72,8 @@
 		FD0A105728A2E06C003C8CBC /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		FD7B05DD294BA85A004AAB94 /* API+LookUpItemDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+LookUpItemDetail.swift"; sourceTree = "<group>"; };
 		FD8ED59C28A8532B00F631F2 /* ItemRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRegistrationViewController.swift; sourceTree = "<group>"; };
+		FDAEEEE729548BDD00367BBE /* ItemEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEditingViewController.swift; sourceTree = "<group>"; };
+		FDAEEEE929548FA700367BBE /* ItemSellingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSellingViewController.swift; sourceTree = "<group>"; };
 		FDB99C22289A5C36001B10BE /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		FDB99C25289A5CD7001B10BE /* ItemDataHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDataHandling.swift; sourceTree = "<group>"; };
 		FDB99C27289A8DC5001B10BE /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
@@ -214,7 +218,7 @@
 			children = (
 				FDCBB297292F334600A16BD6 /* MainPage */,
 				FDD83F792948F47100AC7E2D /* ItemDetail */,
-				FDCBB298292F33AF00A16BD6 /* ItemRegistration */,
+				FDCBB298292F33AF00A16BD6 /* ItemSelling */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -230,12 +234,14 @@
 			path = MainPage;
 			sourceTree = "<group>";
 		};
-		FDCBB298292F33AF00A16BD6 /* ItemRegistration */ = {
+		FDCBB298292F33AF00A16BD6 /* ItemSelling */ = {
 			isa = PBXGroup;
 			children = (
+				FDAEEEE929548FA700367BBE /* ItemSellingViewController.swift */,
 				FD8ED59C28A8532B00F631F2 /* ItemRegistrationViewController.swift */,
+				FDAEEEE729548BDD00367BBE /* ItemEditingViewController.swift */,
 			);
-			path = ItemRegistration;
+			path = ItemSelling;
 			sourceTree = "<group>";
 		};
 		FDCBB299292F342900A16BD6 /* Networking */ = {
@@ -396,6 +402,7 @@
 				FDD83F7D2948F5FA00AC7E2D /* ItemDetail.swift in Sources */,
 				42DEC534289A6B2A0090D35F /* CellConfigurable.swift in Sources */,
 				FDB99C23289A5C36001B10BE /* Section.swift in Sources */,
+				FDAEEEE829548BDD00367BBE /* ItemEditingViewController.swift in Sources */,
 				FD0A105828A2E06C003C8CBC /* HTTPMethod.swift in Sources */,
 				42DEC53D289A9C3A0090D35F /* ImageCacheManager.swift in Sources */,
 				FDD140A2294B19E900B72DDD /* API.swift in Sources */,
@@ -403,6 +410,7 @@
 				42DEC52F289A6A4F0090D35F /* GridCollectionViewController.swift in Sources */,
 				42DEC53B289A9BE10090D35F /* UIImageView+Extensions.swift in Sources */,
 				FD7B05DE294BA85A004AAB94 /* API+LookUpItemDetail.swift in Sources */,
+				FDAEEEEA29548FA700367BBE /* ItemSellingViewController.swift in Sources */,
 				FDE9CBA6288158F200A78B24 /* NetworkingError.swift in Sources */,
 				428A986528900DD80066F73E /* ItemListCollectionViewCell.swift in Sources */,
 				FDD140A4294B1A4800B72DDD /* API+LookUpItems.swift in Sources */,
@@ -564,13 +572,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4K2FDLWHBL;
 				INFOPLIST_FILE = OpenMarket/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.yagom.OpenMarket;
+				PRODUCT_BUNDLE_IDENTIFIER = io.minsson;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -583,13 +592,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4K2FDLWHBL;
 				INFOPLIST_FILE = OpenMarket/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.yagom.OpenMarket;
+				PRODUCT_BUNDLE_IDENTIFIER = io.minsson;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

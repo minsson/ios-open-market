@@ -14,6 +14,7 @@ final class ItemDetailViewController: UIViewController {
     private var productID: String?
     private var itemDetail: ItemDetail?
     private var imageRequests: [URLSessionTask?] = []
+    private var imageViews: [UIImageView] = []
     
     // MARK: - UI Properties
     
@@ -95,6 +96,7 @@ final class ItemDetailViewController: UIViewController {
         setupLayoutConstraints()
         
         retrieveItemDetail()
+        configureEditButton()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -197,6 +199,7 @@ private extension ItemDetailViewController {
             let imageView = UIImageView()
             imageView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
             imagesHorizontalStackView.addArrangedSubview(imageView)
+            imageViews.append(imageView)
             
             let imageRequest: URLSessionTask? = imageView.setImageURL(image.url)
             imageRequests.append(imageRequest)
@@ -224,6 +227,36 @@ private extension ItemDetailViewController {
         }
         
         descriptionLabel.text = itemDetail.description
+    }
+    
+    func configureEditButton() {
+        let composeButton = UIBarButtonItem(
+            barButtonSystemItem: .compose,
+            target: self,
+            action: #selector(presentItemEditingView)
+        )
+
+        self.navigationItem.rightBarButtonItem = composeButton
+    }
+    
+    @objc func presentItemEditingView() {
+        var images: [UIImage] = []
+        imageViews.forEach { imageView in
+            guard let image = imageView.image else {
+                return
+            }
+            images.append(image)
+        }
+
+        let itemEditingViewController: ItemEditingViewController = {
+            let itemEditingViewController = ItemEditingViewController()
+            itemEditingViewController.view.backgroundColor = .systemBackground
+            itemEditingViewController.modalPresentationStyle = .fullScreen
+            itemEditingViewController.receiveData(itemDetail, images)
+            return itemEditingViewController
+        }()
+        
+        present(itemEditingViewController, animated: true)
     }
     
 }

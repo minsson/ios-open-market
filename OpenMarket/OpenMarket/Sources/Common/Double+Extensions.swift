@@ -11,7 +11,7 @@ extension Double {
     
     // MARK: - Actions
     
-    func applyFormat(currency: Currency) -> String? {
+    func applyFormat(currency: Currency?) -> String? {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
         numberFormatter.maximumFractionDigits = 4
@@ -20,6 +20,10 @@ extension Double {
         guard let price = numberFormatter.string(from: self as NSNumber) else {
                   return nil
               }
+        
+        guard let currency = currency else {
+            return price
+        }
         
         return currency.rawValue + " " + price
     }
