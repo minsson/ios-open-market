@@ -11,6 +11,35 @@ class ItemSellingViewController: UIViewController {
     
     // MARK: - UI Components
     
+    private let headerStackView: UIStackView = {
+        let headerStackView = UIStackView()
+        headerStackView.translatesAutoresizingMaskIntoConstraints = false
+        headerStackView.axis = .horizontal
+        headerStackView.distribution = .equalCentering
+        return headerStackView
+    }()
+    
+    private let closeButton: UIButton = {
+        let closeButton = UIButton()
+        closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+        closeButton.tintColor = .label
+        return closeButton
+    }()
+    
+    let viewTitleLabel: UILabel = {
+        let viewTitleLabel = UILabel()
+        viewTitleLabel.text = ""
+        viewTitleLabel.textAlignment = .center
+        return viewTitleLabel
+    }()
+    
+    let doneButton: UIButton = {
+        let doneButton = UIButton()
+        doneButton.setTitle("완료", for: .normal)
+        doneButton.setTitleColor(.systemPurple, for: .normal)
+        return doneButton
+    }()
+    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -109,45 +138,67 @@ class ItemSellingViewController: UIViewController {
 
 private extension ItemSellingViewController {
     
-    // MARK: - Private Actions for AutoLayout
+    func setupRootView() {
+        view.backgroundColor = .systemBackground
+    }
     
     func setupUIComponents() {
-        addViews()
-        addArrangedSubViews()
+        addSubViews()
         setupLayoutConstraints()
     }
     
+    func addSubViews() {
+        view.addSubview(headerStackView)
+        view.addSubview(entireVerticalStackView)
+        
+        headerStackView.addArrangedSubview(closeButton)
+        headerStackView.addArrangedSubview(viewTitleLabel)
+        headerStackView.addArrangedSubview(doneButton)
+
+        entireVerticalStackView.addArrangedSubview(scrollView)
+        entireVerticalStackView.addArrangedSubview(nameTextField)
+        entireVerticalStackView.addArrangedSubview(firstRowHorizontalStackView)
+        entireVerticalStackView.addArrangedSubview(discountedPriceTextField)
+        entireVerticalStackView.addArrangedSubview(stockTextField)
+        entireVerticalStackView.addArrangedSubview(textView)
+        
+        scrollView.addSubview(photoStackView)
+        
+        firstRowHorizontalStackView.addArrangedSubview(priceTextField)
+        firstRowHorizontalStackView.addArrangedSubview(currencySegmentedControl)
+        
+        photoStackView.addArrangedSubview(addingPhotoButtonImageView)
+    }
+    
     func setupLayoutConstraints() {
+        let spaceToEdge: CGFloat = 16
+        
         NSLayoutConstraint.activate([
-            currencySegmentedControl.widthAnchor.constraint(equalToConstant: 100),
+            headerStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: spaceToEdge),
+            headerStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -spaceToEdge),
             
-            addingPhotoButtonImageView.widthAnchor.constraint(equalToConstant: 100),
-            addingPhotoButtonImageView.heightAnchor.constraint(equalToConstant: 100),
-            
+            closeButton.leadingAnchor.constraint(equalTo: headerStackView.leadingAnchor),
+            viewTitleLabel.centerXAnchor.constraint(equalTo: headerStackView.centerXAnchor),
+            doneButton.trailingAnchor.constraint(equalTo: headerStackView.trailingAnchor),
+             
             photoStackView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
             photoStackView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             photoStackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
             photoStackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             photoStackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             
-            entireVerticalStackView.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor
-            ),
-            entireVerticalStackView.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor
-            ),
-            entireVerticalStackView.leadingAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                constant: 16
-            ),
-            entireVerticalStackView.trailingAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                constant: -16
-            )
+            addingPhotoButtonImageView.widthAnchor.constraint(equalToConstant: 100),
+            addingPhotoButtonImageView.heightAnchor.constraint(equalToConstant: 100),
+            
+            entireVerticalStackView.topAnchor.constraint(equalTo: headerStackView.bottomAnchor, constant: spaceToEdge),
+            entireVerticalStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            entireVerticalStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: spaceToEdge),
+            entireVerticalStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -spaceToEdge),
+            
+            currencySegmentedControl.widthAnchor.constraint(equalToConstant: 100)
         ])
     }
-    
-    // MARK: - Actions for Adding UIComponents
     
     func editingTextField(placeholder: String) -> UITextField {
         let editingTextField: UITextField = {
@@ -161,95 +212,19 @@ private extension ItemSellingViewController {
         return editingTextField
     }
     
-    func addViews() {
-        view.addSubview(entireVerticalStackView)
-    }
-    
-    func addArrangedSubViews() {
-        firstRowHorizontalStackView.addArrangedSubview(priceTextField)
-        firstRowHorizontalStackView.addArrangedSubview(currencySegmentedControl)
-        
-        scrollView.addSubview(photoStackView)
-        photoStackView.addArrangedSubview(addingPhotoButtonImageView)
-        
-        entireVerticalStackView.addArrangedSubview(scrollView)
-        entireVerticalStackView.addArrangedSubview(nameTextField)
-        entireVerticalStackView.addArrangedSubview(firstRowHorizontalStackView)
-        entireVerticalStackView.addArrangedSubview(discountedPriceTextField)
-        entireVerticalStackView.addArrangedSubview(stockTextField)
-        entireVerticalStackView.addArrangedSubview(textView)
-    }
 }
 
 // MARK: - Actions for configuration of Components
 
 private extension ItemSellingViewController {
-
+    
     func configureComponents() {
-        configureDoneButton()
         configureImagePicker()
         configureAddingPhotoButtonImageView()
     }
 
-    // MARK: - Actions for Done Button
-
-    func configureDoneButton() {
-        let doneButton = UIBarButtonItem(
-            barButtonSystemItem: .done,
-            target: self,
-            action: #selector(pushDataToServer)
-        )
-
-        self.navigationItem.rightBarButtonItem = doneButton
-    }
     
-    func assembleInputData() -> Data? {
-        guard let name = nameTextField.text,
-              let priceText = priceTextField.text,
-              let price = Double(priceText),
-              let discountedPriceText = discountedPriceTextField.text,
-              let stockText = stockTextField.text,
-              let descriptionText = textView.text else {
-            return nil
-        }
-        
-        let discountedPrice = Double(discountedPriceText) ?? 0
-        let stock = Int(stockText) ?? 0
-        let currency = currencySegmentedControl.selectedSegmentIndex == 0 ? Currency.krw : Currency.usd
-        
-        let requestItem = Item(
-            name: name,
-            price: price,
-            discountedPrice: discountedPrice,
-            currency: currency.rawValue,
-            stock: stock,
-            description: descriptionText
-        )
-        
-        do {
-            let requestItemData = try JSONEncoder().encode(requestItem)
-            return requestItemData
-        } catch {
-            return nil
-        }
     }
-
-    @objc func pushDataToServer() {
-        guard let inputData = assembleInputData() else {
-            return
-        }
-        
-        guard let request = OpenMarketAPIRequestPost(jsonData: inputData, images: selectedPhotos).urlRequest else {
-            return
-        }
-        
-        // TODO: 네트워킹 방법 변경
-        URLSession.shared.dataTask(with: request) { Data, response, error in
-            if let error = error {
-                print(error)
-                return
-            }
-        }.resume()
     }
     
     // MARK: - Actions for Image Picker
