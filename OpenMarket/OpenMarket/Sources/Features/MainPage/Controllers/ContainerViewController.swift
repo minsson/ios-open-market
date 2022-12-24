@@ -241,7 +241,9 @@ private extension ContainerViewController {
             title: "상품 등록",
             style: .default,
             handler: { _ in
-                self.navigationController?.pushViewController(self.itemRegistrationViewController, animated: true)
+                let itemRegistrationViewController = ItemRegistrationViewController()
+                itemRegistrationViewController.modalPresentationStyle = .fullScreen
+                self.present(itemRegistrationViewController, animated: true)
             }
         )
         
