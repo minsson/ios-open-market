@@ -129,6 +129,7 @@ class ItemSellingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureCloseButton()
         setupUIComponents()
         configureComponents()
     }
@@ -223,8 +224,14 @@ private extension ItemSellingViewController {
         configureAddingPhotoButtonImageView()
     }
 
+    // MARK: - Actions for Close Button
     
+    func configureCloseButton() {
+        closeButton.addTarget(self, action: #selector(closeButtonDidTap), for: .touchUpInside)
     }
+    
+    @objc func closeButtonDidTap() {
+        dismiss(animated: true)
     }
     
     // MARK: - Actions for Image Picker
