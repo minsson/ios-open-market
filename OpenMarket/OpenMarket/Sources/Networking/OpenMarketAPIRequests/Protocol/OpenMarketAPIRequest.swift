@@ -22,7 +22,7 @@ protocol OpenMarketAPIRequestGettable: OpenMarketAPIRequest {
     
 }
 
-protocol OpenMarketAPIRequestSettable: OpenMarketAPIRequest, MultipartFormDataHandleable { }
+protocol OpenMarketAPIRequestPostable: OpenMarketAPIRequest, MultipartFormDataHandleable { }
 
 extension OpenMarketAPIRequest {
     
@@ -69,7 +69,7 @@ extension OpenMarketAPIRequestGettable {
     
 }
 
-extension OpenMarketAPIRequestSettable {
+extension OpenMarketAPIRequestPostable {
     
     var url: URL? {
         let urlComponents = URLComponents(string: urlHost + urlPath)
@@ -83,11 +83,9 @@ extension OpenMarketAPIRequestSettable {
         }
         
         var request = URLRequest(url: url)
-        
-        request.httpMethod = "POST"
+        request.httpMethod = httpMethod
         request.setValue("7184295e-4aa1-11ed-a200-354cb82ae52e", forHTTPHeaderField: "identifier")
         request.setValue("multipart/form-data; boundary=" + boundary, forHTTPHeaderField: "Content-type")
-        
         request.httpBody = multipartFormBody
         return request
     }

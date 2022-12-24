@@ -49,7 +49,6 @@ class ItemSellingViewController: UIViewController {
     
     let addingPhotoButtonImageView: UIImageView = {
         let addingPhotoButtonImageView = UIImageView()
-        addingPhotoButtonImageView.translatesAutoresizingMaskIntoConstraints = false
         addingPhotoButtonImageView.image = UIImage(systemName: "camera")
         addingPhotoButtonImageView.contentMode = .scaleAspectFit
         addingPhotoButtonImageView.tintColor = .systemGray
@@ -122,7 +121,7 @@ class ItemSellingViewController: UIViewController {
         return imagePicker
     }()
     
-    private var selectedPhotos: [UIImage] = []
+    var selectedPhotos: [UIImage] = []
     
     // MARK: - Life Cycles
     
