@@ -28,6 +28,7 @@
 		FDAEEEE829548BDD00367BBE /* ItemEditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAEEEE729548BDD00367BBE /* ItemEditingViewController.swift */; };
 		FDAEEEEA29548FA700367BBE /* ItemSellingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAEEEE929548FA700367BBE /* ItemSellingViewController.swift */; };
 		FDAEEEEC2955AB8100367BBE /* API+EditItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAEEEEB2955AB8100367BBE /* API+EditItem.swift */; };
+		FDAEEEEE2957607D00367BBE /* API+DeleteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAEEEED2957607D00367BBE /* API+DeleteItem.swift */; };
 		FDB99C23289A5C36001B10BE /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB99C22289A5C36001B10BE /* Section.swift */; };
 		FDB99C26289A5CD7001B10BE /* ItemDataHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB99C25289A5CD7001B10BE /* ItemDataHandling.swift */; };
 		FDB99C28289A8DC5001B10BE /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB99C27289A8DC5001B10BE /* ContainerViewController.swift */; };
@@ -76,6 +77,7 @@
 		FDAEEEE729548BDD00367BBE /* ItemEditingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEditingViewController.swift; sourceTree = "<group>"; };
 		FDAEEEE929548FA700367BBE /* ItemSellingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSellingViewController.swift; sourceTree = "<group>"; };
 		FDAEEEEB2955AB8100367BBE /* API+EditItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+EditItem.swift"; sourceTree = "<group>"; };
+		FDAEEEED2957607D00367BBE /* API+DeleteItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+DeleteItem.swift"; sourceTree = "<group>"; };
 		FDB99C22289A5C36001B10BE /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		FDB99C25289A5CD7001B10BE /* ItemDataHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDataHandling.swift; sourceTree = "<group>"; };
 		FDB99C27289A8DC5001B10BE /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				FD7B05DD294BA85A004AAB94 /* API+LookUpItemDetail.swift */,
 				FDAEEEEB2955AB8100367BBE /* API+EditItem.swift */,
 				FDD83F6629432EEA00AC7E2D /* API+RegisterItem.swift */,
+				FDAEEEED2957607D00367BBE /* API+DeleteItem.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				42DEC539289A92A50090D35F /* Double+Extensions.swift in Sources */,
 				42DEC53F289D427A0090D35F /* Color.swift in Sources */,
 				FDECB7C02930F1D10085635C /* Currency.swift in Sources */,
+				FDAEEEEE2957607D00367BBE /* API+DeleteItem.swift in Sources */,
 				FDB99C26289A5CD7001B10BE /* ItemDataHandling.swift in Sources */,
 				FDE9CB692880024800A78B24 /* NetworkManager.swift in Sources */,
 				4252740C287D700C00A63D7F /* ItemListPage.swift in Sources */,
