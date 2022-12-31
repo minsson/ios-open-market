@@ -16,7 +16,18 @@ final class ItemDetailViewController: UIViewController {
     private var imageRequests: [URLSessionTask?] = []
     private var imageViews: [UIImageView] = []
     
+    private lazy var actionSheetForComposeButton: UIAlertController = {
+        let actionSheetForComposeButton = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        return actionSheetForComposeButton
+    }()
+    
     // MARK: - UI Properties
+    
+    private lazy var ellipsisButton: UIBarButtonItem = {
+        let ellipsisButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(showActionSheet))
+        
+        return ellipsisButton
+    }()
     
     private let entireVerticalScrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -97,6 +108,7 @@ final class ItemDetailViewController: UIViewController {
         
         retrieveItemDetail()
         configureEditButton()
+        setupActionSheetForEllipsisButton()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -230,16 +242,55 @@ private extension ItemDetailViewController {
     }
     
     func configureEditButton() {
-        let composeButton = UIBarButtonItem(
-            barButtonSystemItem: .compose,
-            target: self,
-            action: #selector(presentItemEditingView)
-        )
-
-        self.navigationItem.rightBarButtonItem = composeButton
+        self.navigationItem.rightBarButtonItem = ellipsisButton
     }
     
-    @objc func presentItemEditingView() {
+    @objc func showActionSheet() {
+        self.present(actionSheetForComposeButton, animated: true)
+    }
+    
+    func setupActionSheetForEllipsisButton() {
+        let itemEditingAction = UIAlertAction(title: "상품 수정", style: .default) { _ in
+                self.presentItemEditingView()
+            }
+        
+        let itemDeletionAction = UIAlertAction(title: "상품 삭제", style: .default) { _ in
+            self.presentPasswordRequestAlert()
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        
+        [itemEditingAction, itemDeletionAction, cancelAction].forEach {
+            actionSheetForComposeButton.addAction($0)
+        }
+    }
+    
+    func presentPasswordRequestAlert() {
+        //TODO: 삭제 여부 Alert 띄우기
+        
+        let uriRequest = API.DeleteItem(productID: productID!, deletionTargetItemURI: "").urlRequestForRetrievingURI
+
+        NetworkManager.execute(uriRequest!) { result in
+            switch result {
+            case .success(let uri):
+                print(uri)
+                let stringURI = String(data: uri, encoding: .utf8)
+                let deleteRequest = API.DeleteItem(productID: "", deletionTargetItemURI: stringURI!).urlRequest
+                NetworkManager.execute(deleteRequest!) { result in
+                    switch result {
+                    case .success(let deletedItem):
+                        print(String(data: deletedItem, encoding: .utf8) as Any)
+                    case .failure(let failure):
+                        print(failure)
+                    }
+                }
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+    }
+    
+    func presentItemEditingView() {
         var images: [UIImage] = []
         imageViews.forEach { imageView in
             guard let image = imageView.image else {
@@ -250,7 +301,6 @@ private extension ItemDetailViewController {
 
         let itemEditingViewController: ItemEditingViewController = {
             let itemEditingViewController = ItemEditingViewController()
-            itemEditingViewController.view.backgroundColor = .systemBackground
             itemEditingViewController.modalPresentationStyle = .fullScreen
             itemEditingViewController.receiveData(itemDetail, images)
             return itemEditingViewController
